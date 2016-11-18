@@ -6,6 +6,7 @@ This repo aims to try out the following:
 * Actor Messages in a separate project
 * Play! Framework as an API gateway
 * Akka as intra microservice comms
-* Akka remoting
+* Akka remoting //TODO
+* SBT run main to create the actorSystem on underlying microservices //TODO
 * Actor per request model for handling incoming HTTP requests in API gateway
 * Compile time dependency injection with actors using Cake pattern
