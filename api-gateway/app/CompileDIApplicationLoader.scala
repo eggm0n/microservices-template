@@ -1,3 +1,4 @@
+import controllers.ApiGateway
 import play.api._
 import play.api.ApplicationLoader.Context
 import play.api.routing.Router
@@ -8,6 +9,9 @@ class CompileDIApplicationLoader extends ApplicationLoader {
   }
 }
 
-class Components(context: Context) extends BuiltInComponentsFromContext(context) {
-  lazy val router = Router.empty
+class Components(context: Context) extends BuiltInComponentsFromContext(context) with Routes {
+
+  object Controllers {
+    val apiGateway = new ApiGateway(actorSystem)
+  }
 }

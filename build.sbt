@@ -17,7 +17,11 @@ lazy val commonSettings = Seq(
 
 lazy val `microservices-template` = project in file(".")
 
-lazy val actors = (project in file("actors"))
+lazy val messages = (project in file("messages"))
+  .settings(commonSettings: _*)
+
+lazy val `example-service` = (project in file ("example-service"))
+  .dependsOn(messages)
   .settings(commonSettings: _*)
   .settings(
     libraryDependencies ++= Seq(
@@ -25,11 +29,8 @@ lazy val actors = (project in file("actors"))
     )
   )
 
-lazy val `services-api` = (project in file ("services-api"))
-  .settings(commonSettings: _*)
-
 lazy val `api-gateway` = (project in file("api-gateway"))
-  .dependsOn(actors)
+  .dependsOn(`example-service`)
   .enablePlugins(PlayScala)
   .settings(commonSettings: _*)
   .settings(
@@ -38,11 +39,11 @@ lazy val `api-gateway` = (project in file("api-gateway"))
     )
   )
 
-
 val runAll = inputKey[Unit]("Runs all subprojects")
 
 runAll := {
-  (run in Compile in `actors`).evaluated
+  (run in Compile in `example-service`).evaluated
+  (run in Compile in `api-gateway`).evaluated
 }
 
 fork in run := true
